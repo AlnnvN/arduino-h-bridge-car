@@ -18,4 +18,29 @@ class Motor{
   int getReversePin();
 };
 
+class Car{
+  int throttleStatus;
+  int reverseStatus;
+
+  Motor motor1;
+  Motor motor2;
+
+  public:
+  void throttle(int speed);
+  void reverse(int speed);
+  void turnLeft(int speed); 
+  void turnRight(int speed);
+  void stop();
+  void updateMotorDirection();
+
+  int getThrottleStatus();
+  void setThrottleStatus(int throttleStatus);
+
+  int getReverseStatus();
+  void setReverseStatus(int reverseStatus);
+  
+  Motor getMotor1();
+  Motor getMotor2();
+};
+
 #endif

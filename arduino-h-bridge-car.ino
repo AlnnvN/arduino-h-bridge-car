@@ -1,77 +1,59 @@
 #include "car.h"
 
-Motor motor1;
-Motor motor2;
-int throttleStatus;
-int reverseStatus;
+Car car;
+int speed;
 
 int throttleBtnPin = A0;
 int reverseBtnPin = A1;
 int leftBtnPin = A2;
 int rightBtnPin = A3;
-int potenciometroPin = A4;
+int potentiometerPin = A4;
 
 void setup()
 {
   //Serial.begin(9600);
   
-  motor1.setEnablePin(5);
-  motor1.setThrottlePin(6);
-  motor1.setReversePin(7);
+  //PINS SETUP
+  //H-bridge
+  car.getMotor1().setEnablePin(5);
+  car.getMotor1().setThrottlePin(6);
+  car.getMotor1().setReversePin(7);
   
-  motor2.setEnablePin(11);
-  motor2.setThrottlePin(12);
-  motor2.setReversePin(13);
+  car.getMotor2().setEnablePin(11);
+  car.getMotor2().setThrottlePin(12);
+  car.getMotor2().setReversePin(13);
   
+  //Controller
   pinMode(throttleBtnPin,INPUT_PULLUP);
   pinMode(reverseBtnPin,INPUT_PULLUP);
   pinMode(leftBtnPin,INPUT_PULLUP);
   pinMode(rightBtnPin,INPUT_PULLUP);
-  pinMode(potenciometroPin,INPUT);
+  pinMode(potentiometerPin,INPUT);
 }
-
-int potenciometro;
 
 void loop()
 {
-  potenciometro = analogRead(potenciometroPin);
-  int carPower = map(potenciometro,0,1023,0,255);
+  //SPEED INTENSITY
+  //uses a potentiometer for intensity input
+  speed = map(analogRead(potentiometerPin),0,1023,0,255); //used to analogWrite
   
-  if(analogRead(throttleBtnPin)<200){//throttle
-    analogWrite(motor1.getEnablePin(),carPower);
-    analogWrite(motor2.getEnablePin(),carPower);
-    throttleStatus = HIGH;
-    reverseStatus = LOW;
+  //CHECKS FOR BUTTON INPUT FOR ANALOG UPDATE
+  //pins set for INPUT_PULLUP - if it reads 0, it's pressed.
+  if(analogRead(throttleBtnPin)<200){ //throttle input
+    car.throttle(speed);
   }
-  else if(analogRead(reverseBtnPin)<200){//reverse
-  	analogWrite(motor1.getEnablePin(),carPower);
-  	analogWrite(motor2.getEnablePin(),carPower);
-    reverseStatus = HIGH;
-    throttleStatus = LOW;
+  else if(analogRead(reverseBtnPin)<200){ //reverse input
+  	car.reverse(speed);
   }
-  else if(analogRead(leftBtnPin)<200){//left
-  	analogWrite(motor1.getEnablePin(),carPower);
-  	analogWrite(motor2.getEnablePin(),carPower*0.4);
-    throttleStatus = HIGH;
-    reverseStatus = LOW;
+  else if(analogRead(leftBtnPin)<200){ //left input
+  	car.turnLeft(speed);
   }
-  else if(analogRead(rightBtnPin)<200){//right
-  	analogWrite(motor1.getEnablePin(),carPower*0.4);
-  	analogWrite(motor2.getEnablePin(),carPower);
-    throttleStatus = HIGH;
-    reverseStatus = LOW;
+  else if(analogRead(rightBtnPin)<200){ //right input,
+  	car.turnRight(speed);
   }
-  else{//stop
-    analogWrite(motor1.getEnablePin(),0);
-  	analogWrite(motor2.getEnablePin(),0);
-  	throttleStatus = LOW;
-    reverseStatus = LOW;
+  else{
+    car.stop();
   }
-  //Serial.println(carPower);
-  digitalWrite(motor1.getThrottlePin(),throttleStatus);
-  digitalWrite(motor1.getReversePin(),reverseStatus);
-  digitalWrite(motor2.getThrottlePin(),throttleStatus);
-  digitalWrite(motor2.getReversePin(),reverseStatus);
-  
+
   delay(100);
 }
