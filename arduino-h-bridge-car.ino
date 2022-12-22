@@ -1,13 +1,9 @@
 #include "car.h"
 
+Controller controller;
+
 Car car;
 int speed;
-
-int throttleBtnPin = A0;
-int reverseBtnPin = A1;
-int leftBtnPin = A2;
-int rightBtnPin = A3;
-int potentiometerPin = A4;
 
 void setup()
 {
@@ -24,31 +20,32 @@ void setup()
   car.getMotor2().setReversePin(13);
   
   //Controller
-  pinMode(throttleBtnPin,INPUT_PULLUP);
-  pinMode(reverseBtnPin,INPUT_PULLUP);
-  pinMode(leftBtnPin,INPUT_PULLUP);
-  pinMode(rightBtnPin,INPUT_PULLUP);
-  pinMode(potentiometerPin,INPUT);
+  controller.setThrottleBtnPin(A0);
+  controller.setReverseBtnPin(A1);
+  controller.setLeftBtnPin(A2);
+  controller.setRightBtnPin(A3);
+  controller.setPotentiometerPin(A4);
+
 }
 
 void loop()
 {
   //SPEED INTENSITY
   //uses a potentiometer for intensity input
-  speed = map(analogRead(potentiometerPin),0,1023,0,255); //used to analogWrite
+  speed = map(analogRead(controller.getPotentiometerPin()),0,1023,0,255); //used for analogWrite
   
   //CHECKS FOR BUTTON INPUT FOR ANALOG UPDATE
   //pins set for INPUT_PULLUP - if it reads 0, it's pressed.
-  if(analogRead(throttleBtnPin)<200){ //throttle input
+  if(analogRead(controller.getThrottleBtnPin())<200){ //throttle input
     car.throttle(speed);
   }
-  else if(analogRead(reverseBtnPin)<200){ //reverse input
+  else if(analogRead(controller.getReverseBtnPin())<200){ //reverse input
   	car.reverse(speed);
   }
-  else if(analogRead(leftBtnPin)<200){ //left input
+  else if(analogRead(controller.getLeftBtnPin())<200){ //left input
   	car.turnLeft(speed);
   }
-  else if(analogRead(rightBtnPin)<200){ //right input,
+  else if(analogRead(controller.getRightBtnPin())<200){ //right input
   	car.turnRight(speed);
   }
   else{

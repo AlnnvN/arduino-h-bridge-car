@@ -3,10 +3,10 @@
 #include "Arduino.h"
 
 class Motor{
-    int enablePin;
-    int throttlePin;
-    int reversePin;
-  
+  int enablePin;
+  int throttlePin;
+  int reversePin;
+
   public:
   void setEnablePin(int enablePin);
   int getEnablePin();
@@ -41,6 +41,31 @@ class Car{
   
   Motor getMotor1();
   Motor getMotor2();
+};
+
+class Controller{
+  int throttleBtnPin;
+  int reverseBtnPin;
+  int leftBtnPin;
+  int rightBtnPin;
+  int potentiometerPin;
+
+  public:
+  
+  int getThrottleBtnPin();
+  void setThrottleBtnPin(int throttleBtnPin);
+
+  int getReverseBtnPin();
+  void setReverseBtnPin(int reverseBtnPin);
+
+  int getLeftBtnPin();
+  void setLeftBtnPin(int leftBtnPin);
+
+  int getRightBtnPin();
+  void setRightBtnPin(int rightBtnPin);
+
+  int getPotentiometerPin();
+  void setPotentiometerPin(int potentiometerPin);
 };
 
 #endif
