@@ -43,4 +43,3 @@ void Controller::setPotentiometerPin(int potentiometerPin){
     this->potentiometerPin = potentiometerPin;
     pinMode(this->potentiometerPin,INPUT);
     return;
-}

@@ -7,6 +7,7 @@ void Motor::setEnablePin(int enablePin){
   }
 
   int Motor::getEnablePin(){
+    Serial.println(this->enablePin);
     return this->enablePin;
   }
 
@@ -26,4 +27,3 @@ void Motor::setEnablePin(int enablePin){
   }
   int Motor::getReversePin(){
     return this->reversePin;
-  }

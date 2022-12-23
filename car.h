@@ -39,8 +39,8 @@ class Car{
   int getReverseStatus();
   void setReverseStatus(int reverseStatus);
   
-  Motor getMotor1();
-  Motor getMotor2();
+  Motor *getMotor1();
+  Motor *getMotor2();
 };
 
 class Controller{
