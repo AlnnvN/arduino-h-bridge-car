@@ -27,3 +27,4 @@ void Motor::setEnablePin(int enablePin){
   }
   int Motor::getReversePin(){
     return this->reversePin;
+  }
