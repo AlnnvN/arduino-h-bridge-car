@@ -4,6 +4,7 @@ Prototype of a small car based on Arduino using an H-bridge circuit
 https://www.tinkercad.com/things/2jjXr40lPYZ
 ![image](https://user-images.githubusercontent.com/108158031/209259816-c29864d4-509a-4b96-aef3-35fc3f906ba4.png)
 
+# Pin schema
 It expects the following Arduino pin schema:
 
 Digital (H-bridge):
